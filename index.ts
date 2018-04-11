@@ -89,3 +89,36 @@ class ArcSweeper {
         this.state.startUpdating(startcb)
     }
 }
+
+class ArcSweeperStage {
+    private canvas : HTMLCanvasElement = document.createElement('canvas')
+    private context : CanvasRenderingContext2D
+    private arcSweeper : ArcSweeper = new ArcSweeper()
+    private animator : Animator = new Animator()
+    constructor() {
+        this.initStage()
+    }
+    initStage() {
+        this.canvas.width = w
+        this.canvas.height = h
+        this.context = this.canvas.getContext('2d')
+        document.body.appendChild(this.canvas)
+    }
+    render() {
+        this.context.fillStyle = '#212121'
+        this.context.fillRect(0, 0, w, h)
+        this.arcSweeper.draw(this.context)
+        this.arcSweeper.update(() => {
+            this.animator.stop()
+        })
+    }
+    handleTap() {
+        this.canvas.onmousedown = () => {
+            this.arcSweeper.startUpdating(() => {
+                this.animator.start(() => {
+                    this.render()
+                })
+            })
+        }
+    }
+}
