@@ -122,3 +122,7 @@ class ArcSweeperStage {
         }
     }
 }
+
+const stage : ArcSweeperStage = new ArcSweeperStage()
+stage.render()
+stage.handleTap()
