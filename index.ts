@@ -23,3 +23,22 @@ class State {
         }
     }
 }
+
+class Animator {
+    private animated : boolean = false
+    private interval : number
+    start(updatecb : Function) {
+        if (!this.animated) {
+            this.animated = true
+            this.interval = setInterval(() => {
+                updatecb()
+            }, 50)
+        }
+    }
+    stop() {
+        if (this.animated) {
+            this.animated = false
+            clearInterval(this.interval)
+        }
+    }
+}
