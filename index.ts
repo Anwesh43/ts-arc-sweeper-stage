@@ -42,3 +42,32 @@ class Animator {
         }
     }
 }
+
+function drawArc(context : CanvasRenderingContext2D, x : number, y : number, r : number, center : boolean, fill : boolean, scale : number) {
+    context.save()
+    context.translate(x, y)
+    for (var i = 0; i < 360 * scale; i++) {
+        const xa : number = r * Math.cos(i * Math.PI/180)
+        const ya : number = r * Math.sin(i * Math.PI/180)
+        if (i == 0) {
+            if (center) {
+                context.moveTo(0, 0)
+            }
+            else {
+                context.moveTo(xa, ya)
+            }
+        }
+        else {
+            context.lineTo(xa, ya)
+        }
+    }
+    if (fill) {
+        context.fill()
+    }
+    else {
+        context.lineWidth = r/6
+        context.lineCap = 'round'
+        context.stroke()
+    }
+    context.restore()
+}
