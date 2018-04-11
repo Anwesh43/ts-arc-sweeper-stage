@@ -3,7 +3,7 @@ const h : number = window.innerHeight
 class State {
     public scales : Array<number> = [0, 0]
     private prevScale : number = 0
-    private j : number = 0
+    public j : number = 0
     private dir : number = 0
     update(stopcb : Function) {
         this.scales[this.j] += this.dir * 0.1
@@ -48,7 +48,8 @@ class Animator {
 function drawArc(context : CanvasRenderingContext2D, x : number, y : number, r : number, center : boolean, fill : boolean, scale : number) {
     context.save()
     context.translate(x, y)
-    for (var i = 0; i < 360 * scale; i++) {
+    context.beginPath()
+    for (var i = 0; i < 365 * scale; i++) {
         const xa : number = r * Math.cos(i * Math.PI/180)
         const ya : number = r * Math.sin(i * Math.PI/180)
         if (i == 0) {
@@ -63,7 +64,7 @@ function drawArc(context : CanvasRenderingContext2D, x : number, y : number, r :
             context.lineTo(xa, ya)
         }
     }
-    if (fill) {
+    if (fill == true) {
         context.fill()
     }
     else {
