@@ -1,3 +1,5 @@
+const w : number = window.innerWidth
+const h : number = window.innerHeight
 class State {
     public scales : Array<number> = [0, 0]
     private prevScale : number = 0
@@ -16,7 +18,7 @@ class State {
             }
         }
     }
-    startUpating(startcb : Function) {
+    startUpdating(startcb : Function) {
         if (this.dir == 0) {
             this.dir = 1 - 2 * this.prevScale
             startcb()
@@ -70,4 +72,20 @@ function drawArc(context : CanvasRenderingContext2D, x : number, y : number, r :
         context.stroke()
     }
     context.restore()
+}
+
+class ArcSweeper {
+    private state : State = new State()
+    draw(context : CanvasRenderingContext2D) {
+        context.fillStyle = '#4527A0'
+        context.strokeStyle = '#4527A0'
+        drawArc(context, w/2, h/2, Math.min(w,h)/8, false, false, this.state.scales[0])
+        drawArc(context, w/2, h/2, Math.min(w,h)/8, true, true, this.state.scales[1])
+    }
+    update(stopcb : Function) {
+        this.state.update(stopcb)
+    }
+    startUpdating(startcb : Function) {
+        this.state.startUpdating(startcb)
+    }
 }
